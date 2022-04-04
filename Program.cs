@@ -38,7 +38,7 @@ builder.Services.AddDefaultIdentity<Usuarios>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-
+  
 builder.Services.AddBlazoredToast();  // Inyectando el Toast
 builder.Services.AddTransient<UsuariosBLL>();
 builder.Services.AddTransient<ClientesBLL>();    // BLLS
