@@ -22,60 +22,7 @@ namespace ProyectoFinal.BLL // BLL Para el metodo de pago
             contexto = _contexto;
         }
 
-        public async Task<bool> Guardar(Pago pago)
-        {
-            if (!Existe(pago.PagoId))
-                return await Insertar(pago);
-            else
-                return await Modificar(pago);
-        }
-
-        private bool Existe(int id)
-        {
-            bool existe = false;
-
-            try
-            {
-                existe = contexto.Pago.Any(t =>t.PagoId == id);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return existe;
-        }
-
-        private async Task<bool> Insertar(Pago pago)
-        {
-            bool Insertado = false;
-
-            try
-            {
-                contexto.Pago.Add(pago);
-                Insertado = await contexto.SaveChangesAsync() > 0;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return Insertado;
-        }
-
-        private async Task<bool> Modificar(Pago pago)
-        {
-            bool Modificado = false;
-
-            try
-            {
-                contexto.Entry(pago).State = EntityState.Modified;
-                Modificado = await contexto.SaveChangesAsync() > 0;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return Modificado;
-        }
+      
 
         public async Task<Pago> Buscar(int id)
         {
@@ -92,26 +39,6 @@ namespace ProyectoFinal.BLL // BLL Para el metodo de pago
             return pago;
         }
 
-        public async Task<bool> Eliminar(int id)
-        {
-            bool Eliminado = false;
-
-            try
-            {
-                var pago = await contexto.Pago.FindAsync(id);
-
-                if (pago != null)
-                {
-                    contexto.Pago.Remove(pago);
-                    Eliminado = (await contexto.SaveChangesAsync() > 0);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return Eliminado;
-        }
 
         public List<Pago> GetList(Expression<Func<Pago, bool>> pago)
         {
