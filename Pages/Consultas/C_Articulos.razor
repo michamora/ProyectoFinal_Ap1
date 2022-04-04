@@ -152,28 +152,35 @@
         lista = new List<Articulo>();
         articulo = new Articulo();
 
-        if (!string.IsNullOrEmpty(Criterio) || !string.IsNullOrWhiteSpace(Criterio))
+        if (Criterio != null)
         {
             switch (Filtro)
             {
                 case "0": //Id
-                    int id = Utilities.ToIntConsulta(Criterio);
-                    if (id == -1)
-                        lista = articuloBLL.GetList(p => p.FechaCreacion >= fechaDesde && p.FechaCreacion <= fechaHasta);
+                    if (fechaDesde != null || fechaHasta != null)
+
+                        lista = articuloBLL.GetList(e => e.ArticuloId == int.Parse(Criterio) && (e.FechaCreacion >= fechaDesde && e.FechaCreacion <=
+                        fechaHasta));
                     else
-                        lista = articuloBLL.GetList(e => e.ArticuloId == id && (e.FechaCreacion >= fechaDesde && e.FechaCreacion <=
+                        lista = articuloBLL.GetList(e => e.ArticuloId == int.Parse(Criterio) || (e.FechaCreacion >= fechaDesde && e.FechaCreacion <=
                         fechaHasta));
                     break;
 
                 case "1":
-                    lista = articuloBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()));
+                    if (fechaDesde != null || fechaHasta != null)
+
+                        lista = articuloBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) && (p.FechaCreacion >= fechaDesde && p.FechaCreacion <=
+                        fechaHasta));
+                    else
+                        lista = articuloBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) || (p.FechaCreacion >= fechaDesde && p.FechaCreacion <=
+                        fechaHasta));
                     break;
                 
             }
         }
         else
         {
-            lista = articuloBLL.GetList(e => e.FechaCreacion >= fechaDesde && e.FechaCreacion <= fechaHasta);
+             lista = articuloBLL.GetList(e => e.FechaCreacion >= fechaDesde && e.FechaCreacion <= fechaHasta);
         }
     }
 }
