@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-   
+
 namespace ProyectoFinal.Migrations
 {
     public partial class inicial : Migration
@@ -303,7 +303,12 @@ namespace ProyectoFinal.Migrations
             migrationBuilder.InsertData(
                 table: "Categoria",
                 columns: new[] { "CategoriaId", "Descripcion" },
-                values: new object[] { 4, "Carnes" });
+                values: new object[] { 4, "Vegetales" });
+
+            migrationBuilder.InsertData(
+                table: "Categoria",
+                columns: new[] { "CategoriaId", "Descripcion" },
+                values: new object[] { 5, "Carnes" });
 
             migrationBuilder.InsertData(
                 table: "Pago",

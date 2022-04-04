@@ -218,6 +218,11 @@ namespace ProyectoFinal.Migrations
                         new
                         {
                             CategoriaId = 4,
+                            Descripcion = "Vegetales"
+                        },
+                        new
+                        {
+                            CategoriaId = 5,
                             Descripcion = "Carnes"
                         });
                 });

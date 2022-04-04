@@ -11,7 +11,7 @@ using ProyectoFinal.Data;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220404034227_inicial")]
+    [Migration("20220404202942_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -220,6 +220,11 @@ namespace ProyectoFinal.Migrations
                         new
                         {
                             CategoriaId = 4,
+                            Descripcion = "Vegetales"
+                        },
+                        new
+                        {
+                            CategoriaId = 5,
                             Descripcion = "Carnes"
                         });
                 });
