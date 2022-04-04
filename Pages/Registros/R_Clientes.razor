@@ -1,0 +1,243 @@
+@page "/clientes"
+
+ @page "/clientes/{ClienteId:int}"
+
+@* Registro de los clientes *@
+
+@inject AuthenticationStateProvider Authentication 
+
+@inject IToastService Toast
+
+@using BLL 
+
+<EditForm Model="cliente" OnValidSubmit ="Guardar">
+    <DataAnnotationsValidator/>
+
+     <div class="card shadow-lg">
+
+        <div class="card ">
+
+            <div class="card-header ">
+
+                <h3 class="card-title">Registro Clientes <div class="oi oi-people" ></div></h3>
+            </div>
+
+            <div class="card-body">
+
+                    <div class="form-group col-4">
+                        <label>Cliente Id</label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="cliente.ClienteId" class="form-control" />
+                            
+                            <div class="input-group-append col">
+                                <button type="button" class="btn btn-primary input-group-text "
+                                    @onclick="Buscar"><span class="oi oi-magnifying-glass">Buscar</span></button>                                                                 
+                            </div>
+                        </div>
+                    </div>
+                <hr>
+                   
+                     
+                        @*...................... Nombre ......................*@
+
+                     <div class="row">
+
+                        <div class="form-group col-3">
+                            <label>Nombre</label>
+                            <InputText  @bind-Value="cliente.Nombre" placeholder="Nombre cliente" class="form-control"/>
+                             <ValidationMessage For="@(() => cliente.Nombre)" />
+                        </div>
+
+                        @*...................... Email ......................*@                       
+
+                        <div class="form-group col-3">
+                        <label>Email</label>
+                        <InputText @bind-Value="cliente.Email" placeholder="Correro electronico" class="form-control" />
+                        <ValidationMessage For="@(() => cliente.Email)" />
+                    </div>
+
+                         @*...................... Fecha de nacimiento ......................*@
+
+                    <div class="form-group col-2">
+                            <label>Fecha Nacimiento </label>
+                            <InputDate @bind-Value="cliente.FechaNacimiento" class="form-control" />
+                        </div>
+                    </div>
+                <br>
+
+                         @*...................... Cedula ......................*@
+                    
+                     <div class="row">
+
+                        <div class="form-group col-3">
+                            <label>Cédula</label>
+                            <InputText @bind-Value="cliente.Cedula" placeholder="Numero de cédula" class="form-control" />
+                            <ValidationMessage For="@(() => cliente.Cedula)" />
+                        </div>
+
+                           @*...................... Direccion ......................*@
+
+                    <div class="form-group col-3">
+                        <label>Dirección <div class="oi oi-map-marker" ></div></label>
+                        <InputText @bind-Value="cliente.Direccion" placeholder="Dirección ciudad" class="form-control" />
+                        <ValidationMessage For="@(() => cliente.Direccion)" />                   
+                   </div>
+
+                   
+                         <div class="form-group col-2">
+                        <label>Metodo de pago <div class="oi oi-credit-card" ></div></label>
+                        <InputSelect @bind-Value="cliente.PagoId" class="form-select text-14">
+                            <option value="0" disabled selected>Seleccionar</option>
+                            @foreach (var item in MetodoPagoList)
+                            {
+                                <option value="@item.PagoId">@item.Metodo</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => cliente.PagoId)" />
+                    </div> 
+                
+
+                    
+              </div>
+            <br>                                            
+                        
+                        @*...................... Telefono ......................*@
+                        
+                    <div class="row">
+
+                        <div class="form-group col-3">
+                            <label>Teléfono</label>
+                            <InputText @bind-Value="cliente.Telefono" placeholder="Numero teléfonico" class="form-control" />
+                            <ValidationMessage For="@(() => cliente.Telefono)" />
+                        </div>
+                      
+                        @*...................... Celular ......................*@
+                       
+                         <div class="form-group col-3">
+                            <label>Celular <div class="oi oi-phone" ></div></label>
+                            <InputText @bind-Value="cliente.Celular" placeholder="Celular" class="form-control" />
+                            <ValidationMessage For="@(() => cliente.Celular)" />
+                        </div>
+                    </div>
+                </div>
+             <br>           
+                    
+                        @*...................... Botones ......................*@
+            
+            <div class="card-footer">
+
+                 <div class="form-group text-center" display: inline-block>
+                    
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                    <span class="oi oi-file"> Nuevo</span>
+                    </button>
+                    
+                    <button type="submit" class="btn btn-lg btn-success">
+                    <span class="oi oi-document"> Guardar</span>
+                    </button>
+                    
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                    <span class="oi oi-trash"> Eliminar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+                       
+    
+</EditForm>
+
+@code
+{
+
+    #nullable disable // Para quitar el aviso de nulls
+
+    Clientes clientes = new Clientes();
+    
+    [Inject]
+    public ClientesBLL clienteBLL { get; set; }      // Inyectando BLL
+
+    [Inject]
+    public PagoBLL pagoBLL { get; set; } 
+
+    private Clientes cliente { get; set; } = new Clientes();
+
+    List<Pago> MetodoPagoList  = new List<Pago>();    
+
+    [Parameter]
+    public int ClienteId { get; set; }
+   
+
+    //-----------------------------------------------------------------------
+
+    protected override void OnInitialized()
+    {          
+       
+       cliente = new Clientes();
+       MetodoPagoList = pagoBLL.GetList(c => true);
+       
+       cliente.ClienteId = ClienteId;
+       Buscar();         
+    }
+
+    public void Nuevo()  // Nuevo cliente
+    {
+        cliente = new Clientes();
+        MetodoPagoList = pagoBLL.GetList(c => true);
+        
+        Toast.ShowInfo("Nuevo cliente");       
+    }
+
+    public async Task Guardar()  // Guardar cliente
+    {
+        bool guardo;
+         
+        
+        guardo = await clienteBLL.Guardar(cliente);
+
+        if (guardo)
+        {
+            
+            Toast.ShowSuccess($"Cliente: {cliente.Nombre}, Guardado correctamente");
+            cliente = new Clientes();
+        }
+        else
+            Toast.ShowError("No se pudo guardar");
+    }
+
+    public void Buscar() // Buscar cliente
+    {
+        if (this.cliente.ClienteId > 0)
+        { 
+        var Cliente = clienteBLL.Buscar(cliente.ClienteId);
+
+        if (Cliente != null)
+        {
+            cliente = Cliente;
+
+            Toast.ShowSuccess($"Cliente: {cliente.Nombre}, encontrado ");
+        }
+        else
+        {
+            Toast.ShowWarning($"No existe un cliente con este Id: {cliente.ClienteId}");
+        }
+        }
+    }
+
+    public async Task Eliminar() // Eliminar cliente
+    {
+        bool Eliminar;
+
+        Eliminar = await clienteBLL.Eliminar(cliente.ClienteId);
+
+        if (Eliminar)
+        {
+            cliente = new Clientes();
+         
+            Toast.ShowSuccess("Eliminado correctamente");
+        }
+        else
+            Toast.ShowError("No fue posible eliminar");
+
+    }
+}

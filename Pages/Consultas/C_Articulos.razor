@@ -1,0 +1,179 @@
+@page "/cArticulo"
+                                  @*--------- Consulta Articulos ---------*@
+@using Models;
+@using ProyectoFinal.BLL 
+
+<EditForm Model="lista">
+    <div class="card ">
+    
+        <div class="card-header">
+            <h4>Consulta Articulos
+                  <div class="oi oi-beaker"></div>
+            </h4>
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="input-group d-flex align-items-end">
+
+                  <div class="form-group col-md-3">
+                  <InputSelect class="form-select text-14" @bind-Value="Filtro">                
+                        <option value="0" disabled selected>Seleccione un filtro</option>                   
+                        <option value="0">Id</option>
+                        <option value="1">Nombre</option>
+                             
+                    </InputSelect>
+                    </div>
+               <div class="Form-group col-md-1"></div>
+    
+                   <div class="Form-group col-3" >
+                        <label>Criterio</label>
+                        <InputText class="form-control" @bind-Value="Criterio" placeholder="Ingrese el criterio de busqueda"  />
+                    </div>
+
+                    <button type="button" class="btn btn-success" @onclick="Consultar">
+                        <i class="oi oi-grid-four-up mr-2" /> Consultar
+                    </button>          
+                </div>
+            <hr>
+
+                <div class="row">
+
+                     <div class="Form-group col-2" >
+                        <span class="form-group ">Desde</span>
+                        <InputDate @bind-Value="fechaDesde" class="form-control" />
+                    </div>
+
+                
+                    <div class="Form-group col-2" >
+                        <span class="form-group">Hasta</span>
+                        <InputDate @bind-Value="fechaHasta" class="form-control"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+    
+         <table class="table table-light table-striped table-bordered">
+            <thead class="thead">
+                <tr class="table">
+
+                    <th>Id</th>
+
+                    <th>Nombre</th>
+
+                    <th>Categoria</th>    
+  
+                    <th>Cantidad</th>  
+
+                    <th>Costo / Unidad</th>  
+
+                    <th>Precio / Venta</th>   
+
+                    <th>ITBIS</th>        
+   
+                    <th>Fecha Registro</th>
+                    
+                    <th>Ver</th>
+                    
+                </tr>
+            </thead>
+          <tbody>
+
+               @if (lista.Count == 0)
+                {
+                    <span>Empty</span>
+                }
+                else
+                {
+                @foreach (var item in lista)
+                {
+
+                     descripcion = categoriaBLL.Buscar(item.CategoriaId);
+                        if(descripcion==null)break;
+                    <tr>
+                        <td>@item.ArticuloId</td>
+                        
+                        <td>@item.Nombre</td>
+                        
+                        <td>@descripcion.Descripcion</td>
+
+                        <td>@item.Cantidad</td>
+
+                        <td>RD$ @item.Costo</td>
+
+                        <td>RD$ @item.Precio</td>
+
+                        <td>@item.ITBIS %</td>
+
+                        <td>@item.FechaCreacion</td>
+                                             
+                         <td><a class="btn btn-sm btn-outline-success oi oi-eye" href="articulo/@item.ArticuloId"></a>
+                        </td>
+                    </tr>             
+                }  
+                }   
+            </tbody>         
+        </table>
+    </div>
+</EditForm>
+
+@code{
+    
+    #nullable disable // Para quitar el aviso de nulls
+    public string Filtro;
+    public string Criterio;
+    private DateTime fechaDesde { get; set; } = new DateTime(2020, 4, 2);
+    private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
+
+    public List<Articulo> lista { get; set; } = new List<Articulo>();
+
+     public Articulo articulo { get; set; } = new Articulo(); 
+
+     public Categoria descripcion { get; set; }    
+    
+
+    [Inject]
+    public CategoriaBLL categoriaBLL { get; set; }
+    
+
+    [Inject]
+    public ArticuloBLL articuloBLL { get; set; }
+    bool listado = false;
+
+
+ protected override void OnInitialized()
+    {
+        Filtro = "0";
+        lista = articuloBLL.GetList(e => true);
+    }
+    private void Consultar()
+    {
+        lista = new List<Articulo>();
+        articulo = new Articulo();
+
+        if (!string.IsNullOrEmpty(Criterio) || !string.IsNullOrWhiteSpace(Criterio))
+        {
+            switch (Filtro)
+            {
+                case "0": //Id
+                    int id = Utilities.ToIntConsulta(Criterio);
+                    if (id == -1)
+                        lista = articuloBLL.GetList(p => p.FechaCreacion >= fechaDesde && p.FechaCreacion <= fechaHasta);
+                    else
+                        lista = articuloBLL.GetList(e => e.ArticuloId == id && (e.FechaCreacion >= fechaDesde && e.FechaCreacion <=
+                        fechaHasta));
+                    break;
+
+                case "1":
+                    lista = articuloBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()));
+                    break;
+                
+            }
+        }
+        else
+        {
+            lista = articuloBLL.GetList(e => e.FechaCreacion >= fechaDesde && e.FechaCreacion <= fechaHasta);
+        }
+    }
+}

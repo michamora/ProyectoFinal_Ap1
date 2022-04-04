@@ -1,0 +1,172 @@
+@page "/cClientes"
+                                    @*--------- Consulta Clientes ---------*@
+@using Models;
+@using ProyectoFinal.BLL 
+
+<EditForm Model="lista">
+    <div class="card ">
+    
+        <div class="card-header">
+            <h4>Consulta Clientes
+                  <div class="oi oi-people"></div>
+            </h4>
+        </div>
+
+       <div class="card-body">
+            <form>
+                <div class="input-group d-flex align-items-end">
+
+                  <div class="form-group col-md-3">
+                  <InputSelect class="form-select text-14" @bind-Value="Filtro">                
+                        <option value="0" disabled selected>Seleccione un filtro</option>                   
+                        <option value="0">Id</option>
+                        <option value="1">Nombre</option>
+                             
+                    </InputSelect>
+                    </div>
+               <div class="Form-group col-md-1"></div>
+    
+                   <div class="Form-group col-3" >
+                        <label>Criterio</label>
+                        <InputText class="form-control" @bind-Value="Criterio" placeholder="Ingrese el criterio de busqueda"  />
+                    </div>
+
+                    <button type="button" class="btn btn-success" @onclick="Consultar">
+                        <i class="oi oi-grid-four-up mr-2" /> Consultar
+                    </button>                   
+                </div>
+             <hr>
+
+                <div class="row">
+
+                     <div class="Form-group col-2" >
+                        <span class="form-group ">Desde</span>
+                        <InputDate @bind-Value="fechaDesde" class="form-control" />
+                    </div>
+
+                
+                    <div class="Form-group col-2" >
+                        <span class="form-group">Hasta</span>
+                        <InputDate @bind-Value="fechaHasta" class="form-control"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+         <table class="table table-light table-striped table-bordered">
+            <thead class="thead">
+                <tr class="table">
+
+                    <th>Id</th>
+
+                    <th>Nombre</th>
+
+                    <th>Email</th>    
+  
+                    <th>Teléfono</th>  
+
+                    <th>Celular <div class="oi oi-phone" ></div></th>  
+
+                    <th>Dirección <div class="oi oi-map-marker" ></div></th>   
+
+                    <th>Cédula <div class="oi oi-credit-card" ></div></th>        
+   
+                    <th>Fecha Nacimiento</th>
+                    
+                    <th>Ver</th>
+                    
+                </tr>
+            </thead>
+          <tbody>
+              @if (lista.Count == 0)
+                {
+                    <span>Empty</span>
+                }
+                else
+                {
+                @foreach (var item in lista)
+                {
+                    Fecha = DateOnly.FromDateTime(item.FechaNacimiento);
+                    <tr>
+                        <td>@item.ClienteId</td>
+                        
+                        <td>@item.Nombre</td>
+                        
+                        <td>@item.Email</td>
+
+                        <td>@item.Telefono</td>
+
+                        <td>@item.Celular</td>
+
+                        <td>@item.Direccion</td>
+
+                        <td>@item.Cedula</td>
+
+                        <td>@Fecha</td>
+                       
+                        
+                         <td><a class="btn btn-sm btn-outline-success oi oi-eye" href="clientes/@item.ClienteId"></a>
+                        </td>
+                    </tr>                   
+                } 
+                }             
+            </tbody>         
+        </table>
+ </div>
+</EditForm>
+
+@code{
+    
+    #nullable disable // Para quitar el aviso de nulls
+    public string Filtro;
+    public string Criterio;
+    private DateTime fechaDesde { get; set; } = new DateTime(1970, 12, 2);
+    private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
+    
+    public DateOnly Fecha { get; set; } 
+  
+    public List<Clientes> lista { get; set; } = new List<Clientes>();
+
+    public Clientes cliente { get; set; } = new Clientes();    
+    
+
+    [Inject]
+    public ClientesBLL clienteBLL { get; set; }
+    bool listado = false;
+
+
+  protected override void OnInitialized()
+    {
+        Filtro = "0";
+        lista = clienteBLL.GetList(e => true);
+    }
+    private void Consultar()
+    {
+        lista = new List<Clientes>();
+        cliente = new Clientes();
+
+        if (!string.IsNullOrEmpty(Criterio) || !string.IsNullOrWhiteSpace(Criterio))
+        {
+            switch (Filtro)
+            {
+                case "0": //Id
+                    int id = Utilities.ToIntConsulta(Criterio);
+                    if (id == -1)
+                        lista = clienteBLL.GetList(p => p.FechaNacimiento >= fechaDesde && p.FechaNacimiento <= fechaHasta);
+                    else
+                        lista = clienteBLL.GetList(e => e.ClienteId == id && (e.FechaNacimiento >= fechaDesde && e.FechaNacimiento <=
+                        fechaHasta));
+                    break;
+
+                case "1":
+                    lista = clienteBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()));
+                    break;
+                
+            }
+        }
+        else
+        {
+            lista = clienteBLL.GetList(e => e.FechaNacimiento >= fechaDesde && e.FechaNacimiento <= fechaHasta);
+        }
+    }
+}

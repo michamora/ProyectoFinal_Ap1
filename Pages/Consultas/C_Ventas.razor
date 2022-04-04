@@ -1,0 +1,160 @@
+@page "/cVenta"
+
+                                     @*--------- Consulta Ventas ---------*@
+@using Models
+@using ProyectoFinal.BLL 
+@inject IToastService Toast
+
+<EditForm Model="venta" OnValidSubmit="Consultar">
+    <DataAnnotationsValidator />
+
+    <div class="card" >
+
+         <div class="card-header">
+            <h4>Consulta Ventas
+                  <div class="oi oi-cart"></div>
+            </h4>
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="input-group d-flex align-items-end">
+
+                  <div class="form-group col-md-3">
+                  <InputSelect class="form-select text-14" @bind-Value="Filtro">                
+                        <option value="0" disabled selected>Seleccione un filtro</option>                   
+                        <option value="0">Id</option>
+                             
+                    </InputSelect>
+                    </div>
+               <div class="Form-group col-md-1"></div>
+    
+                   <div class="Form-group col-3" >
+                        <label>Criterio</label>
+                        <InputText class="form-control" @bind-Value="Criterio" placeholder="Ingrese el criterio de busqueda"  />
+                    </div>
+
+                    <button type="button" class="btn btn-success" @onclick="Consultar">
+                        <i class="oi oi-grid-four-up mr-2" /> Consultar
+                    </button>                 
+                </div>
+            <hr>
+
+                <div class="row">
+
+                     <div class="Form-group col-2" >
+                        <span class="form-group ">Desde</span>
+                        <InputDate @bind-Value="fechaDesde" class="form-control" />
+                    </div>
+
+                
+                    <div class="Form-group col-2" >
+                        <span class="form-group">Hasta</span>
+                        <InputDate @bind-Value="fechaHasta" class="form-control"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+         <table class="table table-light table-striped table-bordered">
+            <thead class="thead">
+                <tr class="table">
+
+                     <th>Id</th>
+
+                    <th>Fecha Venta</th>              
+
+                    <th>Unidades vendidas</th>    
+   
+                    <th>SubTotal</th>   
+
+                    <th>ITBIS</th>        
+   
+                    <th>Total</th>
+                    
+                    <th>Ver</th>
+                    
+                </tr>
+            </thead>
+          <tbody>
+               @if (lista.Count == 0)
+                {
+                    <span>Empty</span>
+                }
+                else
+                {
+                @foreach (var item in lista)
+                {
+                   
+                    <tr>
+                        <td>@item.VentaId</td>
+                        
+                        <td>@item.Fecha</td>
+
+                        <td>@item.UnidadesVendidas</td>
+
+                        <td>RD$ @item.SubTotal</td>
+
+                        <td>@item.ITBIS %</td>
+
+                        <td>RD$ @item.Total</td>
+                                             
+                         <td><a class="btn btn-sm btn-outline-success oi oi-eye" href="ventas/@item.VentaId"></a>
+                        </td>
+                    </tr>                   
+                } 
+                }  
+                
+                           
+            </tbody>           
+        </table> 
+    </div>
+</EditForm>
+
+@code{
+    
+    #nullable disable // Para quitar el aviso de nulls
+    public string Filtro;
+    private DateTime fechaDesde { get; set; } = new DateTime(2020, 4, 2);
+    private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
+    public string Criterio;
+    public Articulo articulo { get; set; }
+    public Ventas venta { get; set; } = new Ventas();
+    public List<Ventas> lista { get; set; } = new List<Ventas>();
+   
+
+    [Inject]
+    public VentasBLL ventaBLL { get; set; }
+    bool listado = false;
+
+   
+    protected override void OnInitialized()
+    {
+        Filtro = "0";
+        lista = ventaBLL.GetList(e => true);
+    }
+    private void Consultar()
+    {
+        lista = new List<Ventas>();
+        venta = new Ventas();
+        if (!string.IsNullOrEmpty(Criterio) || !string.IsNullOrWhiteSpace(Criterio))
+        {
+            switch (Filtro)
+            {
+                case "0": //Id
+                    int id = Utilities.ToIntConsulta(Criterio);
+                    if (id == -1)
+                        lista = ventaBLL.GetList(p => p.Fecha >= fechaDesde && p.Fecha <= fechaHasta);
+                    else
+                        lista = ventaBLL.GetList(e => e.VentaId == id && (e.Fecha >= fechaDesde && e.Fecha <=
+                        fechaHasta));
+                    break;
+                
+            }
+        }
+        else
+        {
+            lista = ventaBLL.GetList(e => e.Fecha >= fechaDesde && e.Fecha <= fechaHasta);
+        }
+    }
+}

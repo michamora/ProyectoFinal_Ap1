@@ -1,0 +1,60 @@
+﻿@page "/"
+
+@using BLL
+
+    <AuthorizeView>
+    <Authorized>
+         <h1>
+              Sistema Compra & Ventas <div class="oi oi-cart" ></div>
+         </h1>
+
+        <div>
+        <p>Biemvenido 
+           @(context.User.Identity.Name)</p>   
+        </div>
+
+        <div> <p>Proyecto Final - Aplicada 1: Este es un sistema de Compra & Ventas, donde puedes registrar Clientes, Articulos y realizar ventas con detalle. </p></div> 
+        
+
+         <div class="container">
+        <partial name="_CookieConsentPartial" optional />
+        <main role="main" class="pb-1">
+           
+        </main>
+    </div>
+    <footer class="footer border-top pl-3 text-muted">
+        <div class="container">
+        &copy; 2022 - Michael Bolivar Mora Ortega
+            
+        </div>
+    </footer>
+
+
+    </Authorized>
+    <NotAuthorized>
+        <h1>Sistema Compra & Ventas</h1>
+
+        Debe <a href="Identity/Account/Login">Iniciar sesión</a>, o <a href="Identity/Account/Register">Registrarse</a> para utilizar el sistema de registros.
+
+    </NotAuthorized>
+</AuthorizeView>
+
+@code
+{
+    #nullable disable // Para quitar el aviso de nulls
+
+    [Inject]
+    public UsuariosBLL usuarios { get; set; }
+
+    List<Usuarios> Lista = new List<Usuarios>();
+
+    protected override void OnInitialized()
+    {
+        Lista = new List<Usuarios>();
+    }
+
+    public async Task Consultar()
+    {
+        Lista = await usuarios.GetList(c => true);
+    }
+}

@@ -1,0 +1,519 @@
+@page "/ventas"
+
+@page "/ventas/{VentaId:int}"
+
+
+@* Registro de ventas *@
+
+@inject AuthenticationStateProvider Authentication 
+
+@inject IToastService Toast
+
+@using Models
+@using BLL 
+
+<EditForm Model="venta" OnValidSubmit ="Guardar">
+    <DataAnnotationsValidator/>
+
+<div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3 class="card-title">Registro Ventas <div class="oi oi-cart" ></div></h3>
+            </div>
+
+            <div class="card-body">
+
+                    <div class="form-group col-md-3">
+                        <label>Venta Id</label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="venta.VentaId" class="form-control" />
+                            
+                            <div class="input-group-append col">
+                                <button type="button" class="btn btn-primary input-group-text "
+                                    @onclick="Buscar"><span class="oi oi-magnifying-glass">Buscar</span></button>                                                                 
+                            </div>
+                        </div>                      
+                    </div>
+                <br>
+                                 
+                        @*...................... Fecha ......................*@
+
+                    <div class="form-group col-md-2">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="venta.Fecha" class="form-control col-8" />
+                        </div>
+                    <hr>
+                        
+
+                        @*...................... Cliente ......................*@
+
+                      
+                         <div class="row">
+
+                        <div class="form-group col-md-1"></div>
+
+                        <div class="form-group col-md-3">
+                        <label>Cliente <div class="oi oi-person" ></div></label>
+                        <select @bind="Detalle.ClienteId" class="form-select text-14">
+                            <option value="0" disabled selected>Seleccione un cliente</option>
+                            @foreach (var item in ClienteList)
+                            {
+                                <option value="@item.ClienteId">@item.Nombre </option>
+                            }
+                        </select>
+                        
+                    </div>
+
+
+                         @*...................... Articulo ......................*@
+
+                     <div class="form-group col-md-3">
+                        <label>Articulo <div class="oi oi-beaker" ></div></label>
+                         <select  @bind="ArticuloSeleccionado" class="form-select text-14" @onfocusout="ObtenerDatosArticulo">
+                            <option value="0" disabled selected> Seleccione un articulo </option>
+                            @foreach (var item in ArticuloList)
+                            {
+                                <option value="@item.ArticuloId">@item.Nombre</option>
+                            }
+                         </select>
+                         
+                     </div>
+
+
+                         @*...................... Cantidad ......................*@
+
+                    <div class="form-group col-md-2">
+                        <label>Cantidad <div class="oi oi-layers" ></div></label>
+                        <InputNumber @bind-Value="Detalle.Cantidad" class="form-control"/>
+                        <ValidationMessage For="@(() => Detalle.Cantidad)" />
+                    </div>
+
+                         @*...................... Boton Add ......................*@
+
+                                <div class="form-group col">
+                                    
+                                    <button type="button" class="btn btn-primary" @onclick="AgregarDetalle">                                
+                                <span class="oi oi-plus" > Add</span>
+                            </button>
+                        </div>
+                    </div>                      
+                <br>
+
+                
+                        <table class="table table-light table-striped table-bordered">
+                         <thead class="thead">
+                           <tr class="table">
+                                    
+                                    <th>Id</th>
+
+                                    <th>Cliente Id</th>
+
+                                    <th>Articulo Id</th>
+
+                                    <th>Cantidad</th>
+
+                                    <th>Precio</th>
+                                    
+                                </tr>
+                            </thead>
+                        <tbody>
+
+                              @if (venta.ventasDetalle is not null)
+                              {
+                                @foreach (var item in venta.ventasDetalle)
+                                {
+                                    <tr>
+                                        
+                                        <td>@item.Id</td>
+                                        <td>@item.ClienteId</td>
+                                        <td>@item.ArticuloId</td>
+                                        <td>@item.Cantidad</td>
+                                        <td>RD$ @item.PrecioArticulo</td>                                     
+                                        
+                                        <td><span class="oi oi-trash text-danger oi oi-x" href="#" title='Remover Detalle' @onclick=" (() => RemoverDetalle(item)) "> </span></td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>                   
+                     <hr>
+                     <div class="row">
+                     <div class="form-group col-md-2">
+                        <label>Articulo Unidades</label>
+                        <InputNumber @bind-Value="venta.Existencia" class="form-control col-5" readOnly="true" />
+                    </div>
+
+                    <div class="form-group col-md-4"></div>
+
+                    
+                                           
+                    
+
+                         @*...................... Subtotal ......................*@
+
+           
+
+            <div class="form-group col-md-2">
+                    <label >SubTotal</label>
+                    <InputNumber @bind-Value="venta.SubTotal" class="form-control col" readOnly="true"  />
+                </div>
+            <br>
+
+                     @*...................... ITBIS ......................*@
+
+                <div class="form-group col-md-2">
+                    <label>% ITBIS</label>
+                   <InputNumber @bind-Value="venta.ITBIS" class="form-control col" readOnly="true" />
+                    
+                </div>
+            <br>
+
+                     @*...................... Total ......................*@
+
+                <div class="form-group col-md-2">
+                    <label >Total</label>
+                   <InputNumber @bind-Value="venta.Total" class="form-control col" readOnly="true" />
+                </div>
+            </div>
+
+                  <hr>  @*...................... Pago Obtenido ......................*@
+
+                       <div class="row">
+                                                                                
+                     <div class="form-group col-2"> 
+                        <label>Pago Obtenido</label>
+                        <InputNumber @bind-Value="venta.PagoObtenido" @onfocusout="ObtenerDevuelta" class="form-control" />
+                        <ValidationMessage For="@(() => venta.PagoObtenido)" />
+                    </div>
+
+                        @*...................... Devuelta ......................*@
+
+                    <div class="form-group col-md-2"> 
+                        <label>Devuelta</label>
+                        <InputNumber @bind-Value="venta.MontoRestante" class="form-control col-5" readOnly="true" />
+                    </div>     
+                </div>           
+            <br>
+                                  
+     
+                        @*...................... Botones ......................*@
+            
+            <div class="card-footer">
+
+                 <div class="form-group text-center" display: inline-block>
+                    
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                    <span class="oi oi-file"> Nuevo</span>
+                    </button>
+                    
+                    <button type="submit" class="btn btn-lg btn-success">
+                    <span class="oi oi-document"> Guardar</span>
+                    </button>
+                    
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                    <span class="oi oi-trash"> Eliminar</span>
+                    </button>               
+              </div>
+          </div>
+       </div>    
+    </div>  
+</div>                 
+
+</EditForm>
+
+@code {
+
+    #nullable disable // Para quitar el aviso de nulls
+
+    [Parameter]  
+    public int VentaId { get; set; }  
+    public float cantidad { get; set; }
+    
+
+    //-----------------------------------------------------------------------
+    Ventas venta = new Ventas();
+    VentasDetalle Detalle  = new VentasDetalle();
+    Articulo articulo  = new Articulo();
+
+    public int ArticuloSeleccionado { get; set; }
+
+    public float precioArticulo { get; set; }
+
+    public float existenciaArticulo { get; set; }
+
+    public float ITBIS { get; set;}
+
+    public float SubTotal { get; set;}
+
+    public float Total { get; set;}
+
+    List<Clientes> ClienteList  = new List<Clientes>();
+
+    List<Articulo> ArticuloList  = new List<Articulo>();
+
+    
+
+    //-----------------------------------------------------------------------
+
+    [Inject]
+    public VentasBLL ventaBLL { get; set; }
+
+    [Inject]
+    public ArticuloBLL articuloBLL { get; set; }           // Inyectando BLLS
+
+    [Inject]
+    public ClientesBLL clienteBLL { get; set; }
+
+    
+
+    //-------------------------------------------------------------------------
+    
+    protected override void OnInitialized()
+    {  
+        this.venta.VentaId = VentaId;
+        ArticuloList = articuloBLL.GetList(p => true);
+        ClienteList = clienteBLL.GetList(p => true);
+     
+        Buscar();
+    }
+
+    public void Nuevo() // Nueva venta
+    {
+        Toast.ShowInfo("Nueva Venta");
+        cantidad = 0;
+        precioArticulo = 0;
+        ArticuloSeleccionado = 0;
+        SubTotal = 0;
+        ITBIS = 0;
+        Total = 0;
+        existenciaArticulo = 0;
+
+
+        venta = new Ventas();
+        Detalle = new VentasDetalle();
+        ArticuloList = articuloBLL.GetList(p => true);
+        ClienteList = clienteBLL.GetList(p => true);      
+          
+    }
+
+    private void ObtenerDatosArticulo() // Obteniendo los datos del articulo seleccionado
+    {
+        Articulo auxArticulo = articuloBLL.Buscar(ArticuloSeleccionado);
+
+        if (auxArticulo != null)
+        {
+            precioArticulo = auxArticulo.Precio; // Mostrando el precio del articulo seleccionado
+            venta.Existencia = auxArticulo.Cantidad; // Mostrando la cantidad de unidades del articulo seleccionado
+
+            venta.ITBIS = auxArticulo.ITBIS; // Mostrando el % de ITBIS del articulo seleccionado
+            venta.SubTotal = auxArticulo.Precio * Detalle.Cantidad; // Mostrando el subtotal de esa venta
+
+            venta.Existencia = auxArticulo.Cantidad - Detalle.Cantidad; // Atualizando cantidad reducida de articulos          
+ 
+        }
+    }
+
+    private void ActualizandoUnidadesArticulo() 
+    {
+         Articulo auxArticulo = articuloBLL.Buscar(ArticuloSeleccionado);
+
+    if (auxArticulo != null)
+     {
+
+         venta.UnidadesVendidas = Detalle.Cantidad; // Las unidades que se vendieron
+
+         auxArticulo.Cantidad -= Detalle.Cantidad; // Reduciendo la cantidad de unidades vendidas del articulo
+
+     } 
+
+    }
+
+    private void ObtenerDevuelta() // Devuelta que le sobra al cliente
+    {
+        Articulo auxArticulo = articuloBLL.Buscar(ArticuloSeleccionado);
+
+        if (auxArticulo != null)
+        {
+            if (venta.PagoObtenido > venta.Total)
+            {
+              venta.MontoRestante = venta.PagoObtenido - venta.Total;
+            } 
+            
+        }
+    }
+
+    public void Guardar() // Guardar venta
+    {
+        if (Detalle.ClienteId == 0) // Validacion
+        {
+            Toast.ShowWarning("Tiene que seleccionar un cliente.");
+            return;
+        }
+
+        if (ArticuloSeleccionado == 0) // Validacion
+        {
+            Toast.ShowWarning("Tiene que seleccionar un articulo.");
+            return;
+        }
+        if (Detalle.Cantidad == 0) // Validacion
+        {
+            Toast.ShowWarning("Agregue la cantidad a vender");
+            return;
+        }
+
+        if (venta.PagoObtenido == 0) // Validacion
+        {
+            Toast.ShowWarning("Ingrese el monto de pago obtenido.");
+            return;
+        }
+ 
+
+        if (venta.PagoObtenido < venta.Total) // Validacion
+        {
+            Toast.ShowWarning("El pago debe ser mayor o igual al Total");
+            return;
+        }
+
+       
+        
+
+        bool guardado;
+
+        ObtenerDevuelta();
+        ActualizandoUnidadesArticulo();
+      
+        guardado = ventaBLL.Guardar(venta);
+
+        if (guardado)
+        {
+            ArticuloSeleccionado = 0;
+            venta = new Ventas();
+            Detalle = new VentasDetalle();
+
+            Toast.ShowSuccess("Guardado correctamente");         
+            
+        }
+        else
+            Toast.ShowError("No fue posible guardar");
+    
+    }
+
+
+    protected void Buscar() // Buscar Ventas registradas
+    {
+        if (this.venta.VentaId > 0)
+        { 
+            var Venta = ventaBLL.Buscar(this.venta.VentaId);
+            
+            if (Venta != null)
+            {        
+                venta = Venta;
+                
+                Toast.ShowSuccess($"Venta : {venta.VentaId}, encontrada");
+                // Indicando el id de la venta encontrada
+            }
+            else
+            {
+                Toast.ShowWarning($"Id : {venta.VentaId}, no esta registrado");
+            }
+        }
+    
+    }
+
+    public void AgregarDetalle() // Agregar detalle de venta
+    {
+
+         if (Detalle.ClienteId == 0) // Validacion
+        {
+            Toast.ShowWarning("Tiene que seleccionar un cliente.");
+            return;
+        }
+
+        if (ArticuloSeleccionado == 0) // Validacion
+        {
+            Toast.ShowWarning("Tiene que seleccionar un articulo.");
+            return;
+        }
+
+        if (Detalle.Cantidad == 0) // Validacion
+        {
+            Toast.ShowWarning("Ingrese la cantidad de unidades a vender");
+            return;
+        }
+
+        if (Detalle.Cantidad > venta.Existencia) // Validacion
+        {
+            Toast.ShowWarning("La cantidad a vender no puede ser mayor que la existencia.");
+            return;
+        }
+        else
+        {
+         
+       this.venta.ventasDetalle.Add(new VentasDetalle 
+            {
+                VentaId = VentaId,
+                ClienteId = Detalle.ClienteId,
+                ArticuloId = ArticuloSeleccionado,         // Agregando el detalle
+                Cantidad = Detalle.Cantidad,
+                PrecioArticulo = precioArticulo
+                
+
+            });
+        }          
+             CalculoTotal();      
+             ObtenerDatosArticulo();                    
+         
+    }
+
+     private void RemoverDetalle(VentasDetalle item) // Remover detalle
+    {
+        
+        Toast.ShowInfo("Detalle removido");
+        this.venta.ventasDetalle.Remove(item); 
+     
+    } 
+
+
+    public void CalculoTotal() // Calculando el Total
+    {
+       Articulo auxArticulo = articuloBLL.Buscar(ArticuloSeleccionado);
+
+        if (auxArticulo != null)
+        {
+            precioArticulo = auxArticulo.Precio; // Precio del articulo seleccionado
+
+            existenciaArticulo = auxArticulo.Cantidad; // Unidades del articulo seleccionado
+
+            venta.ITBIS = auxArticulo.ITBIS; // %ITBIS del articulo seleccionado
+
+            venta.SubTotal = auxArticulo.Precio * Detalle.Cantidad; // Subtotal del articulo seleccionado
+
+            ITBIS = venta.SubTotal * 18 / 100; // Calculo de ITBIS
+
+            venta.Total += (venta.SubTotal + ITBIS); // Mostrando el total que hace esa venta                            
+        }
+
+    }
+
+
+    public void Eliminar() // Eliminar venta registrada
+    {
+        bool Eliminar;
+
+        Eliminar =  ventaBLL.Eliminar(venta.VentaId);
+
+        if (Eliminar)
+        {
+            venta = new Ventas();
+            Detalle = new VentasDetalle();
+
+            Toast.ShowSuccess("Eliminado correctamente");
+        }
+        else
+            Toast.ShowError("No fue posible eliminar");
+
+    }
+}
