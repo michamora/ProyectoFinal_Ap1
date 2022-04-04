@@ -152,15 +152,13 @@
 
     #nullable disable // Para quitar el aviso de nulls
 
-    Clientes clientes = new Clientes();
+    Clientes cliente = new Clientes();
     
     [Inject]
-    public ClientesBLL clienteBLL { get; set; }      // Inyectando BLL
+    public ClientesBLL clienteBLL { get; set; }  // Inyectando BLL
 
     [Inject]
-    public PagoBLL pagoBLL { get; set; } 
-
-    private Clientes cliente { get; set; } = new Clientes();
+    public PagoBLL pagoBLL { get; set; }  // Inyectando BLL
 
     List<Pago> MetodoPagoList  = new List<Pago>();    
 
