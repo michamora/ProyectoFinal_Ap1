@@ -148,10 +148,10 @@
     public int ArticuloId { get; set; } 
 
     [Inject]
-    public CategoriaBLL categoriaBLL { get; set; }      // Inyectando BLLS
+    public CategoriaBLL categoriaBLL { get; set; } // Inyectando BLLS
                                                           
     [Inject]
-    public ArticuloBLL articuloBLL { get; set; }
+    public ArticuloBLL articuloBLL { get; set; }  // Inyectando BLL
 
     List<Categoria> CategoriaList  = new List<Categoria>();
     
