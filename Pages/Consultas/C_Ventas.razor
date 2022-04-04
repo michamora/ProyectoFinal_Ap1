@@ -115,10 +115,11 @@
     
     #nullable disable // Para quitar el aviso de nulls
     public string Filtro;
+    public string Criterio;
+
     private DateTime fechaDesde { get; set; } = new DateTime(2020, 4, 2);
     private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
-    public string Criterio;
-    public Articulo articulo { get; set; }
+    
     public Ventas venta { get; set; } = new Ventas();
     public List<Ventas> lista { get; set; } = new List<Ventas>();
    
@@ -137,16 +138,18 @@
     {
         lista = new List<Ventas>();
         venta = new Ventas();
-        if (!string.IsNullOrEmpty(Criterio) || !string.IsNullOrWhiteSpace(Criterio))
+
+        if (Criterio != null)
         {
             switch (Filtro)
             {
                 case "0": //Id
-                    int id = Utilities.ToIntConsulta(Criterio);
-                    if (id == -1)
-                        lista = ventaBLL.GetList(p => p.Fecha >= fechaDesde && p.Fecha <= fechaHasta);
+                    if (fechaDesde != null || fechaHasta != null)
+
+                        lista = ventaBLL.GetList(e => e.VentaId == int.Parse(Criterio) && (e.Fecha >= fechaDesde && e.Fecha <=
+                        fechaHasta));
                     else
-                        lista = ventaBLL.GetList(e => e.VentaId == id && (e.Fecha >= fechaDesde && e.Fecha <=
+                        lista = ventaBLL.GetList(e => e.VentaId == int.Parse(Criterio) || (e.Fecha >= fechaDesde && e.Fecha <=
                         fechaHasta));
                     break;
                 
