@@ -111,35 +111,55 @@
         }
       },
       {
-        "HashCode": 101026326,
+        "HashCode": 116310925,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Index",
+        "Name": "ProyectoFinal.Pages.Registros.R_Articulos",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "Index"
+            "TagName": "R_Articulos"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "ArticuloId",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "ArticuloId"
+            }
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Index"
+          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Articulos"
         }
       },
       {
-        "HashCode": 437297279,
+        "HashCode": -982218852,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Index",
+        "Name": "ProyectoFinal.Pages.Registros.R_Articulos",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Pages.Index"
+            "TagName": "ProyectoFinal.Pages.Registros.R_Articulos"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "ArticuloId",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "ArticuloId"
+            }
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Index",
+          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Articulos",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -250,88 +270,68 @@
         }
       },
       {
-        "HashCode": 116310925,
+        "HashCode": 101026326,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Registros.R_Articulos",
+        "Name": "ProyectoFinal.Pages.Index",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "R_Articulos"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "ArticuloId",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "ArticuloId"
-            }
+            "TagName": "Index"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Articulos"
+          "Common.TypeName": "ProyectoFinal.Pages.Index"
         }
       },
       {
-        "HashCode": -982218852,
+        "HashCode": 437297279,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Registros.R_Articulos",
+        "Name": "ProyectoFinal.Pages.Index",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Pages.Registros.R_Articulos"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "ArticuloId",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "ArticuloId"
-            }
+            "TagName": "ProyectoFinal.Pages.Index"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Articulos",
+          "Common.TypeName": "ProyectoFinal.Pages.Index",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
       {
-        "HashCode": 562017102,
+        "HashCode": 578359779,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.App",
+        "Name": "ProyectoFinal.Shared.NavMenu",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "App"
+            "TagName": "NavMenu"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.App"
+          "Common.TypeName": "ProyectoFinal.Shared.NavMenu"
         }
       },
       {
-        "HashCode": -459912441,
+        "HashCode": 1780058909,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.App",
+        "Name": "ProyectoFinal.Shared.NavMenu",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.App"
+            "TagName": "ProyectoFinal.Shared.NavMenu"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.App",
+          "Common.TypeName": "ProyectoFinal.Shared.NavMenu",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -518,35 +518,35 @@
         }
       },
       {
-        "HashCode": 578359779,
+        "HashCode": 562017102,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Shared.NavMenu",
+        "Name": "ProyectoFinal.App",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "NavMenu"
+            "TagName": "App"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Shared.NavMenu"
+          "Common.TypeName": "ProyectoFinal.App"
         }
       },
       {
-        "HashCode": 1780058909,
+        "HashCode": -459912441,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Shared.NavMenu",
+        "Name": "ProyectoFinal.App",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Shared.NavMenu"
+            "TagName": "ProyectoFinal.App"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Shared.NavMenu",
+          "Common.TypeName": "ProyectoFinal.App",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
