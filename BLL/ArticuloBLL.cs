@@ -98,22 +98,6 @@ namespace ProyectoFinal.BLL
             return articulo;
         }
 
-        public Articulo Buscar(float precio)
-        {
-            Articulo articulo = new Articulo();
-
-            try
-            {
-                articulo =  contexto.Articulo.Find(precio);
-
-                
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return articulo;
-        }
 
  
         public async Task<bool> Eliminar(int id)
