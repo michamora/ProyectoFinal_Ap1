@@ -115,7 +115,7 @@ namespace ProyectoFinal.BLL
             return articulo;
         }
 
-
+ 
         public async Task<bool> Eliminar(int id)
         {
             bool Eliminado = false;

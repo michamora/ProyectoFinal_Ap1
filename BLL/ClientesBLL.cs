@@ -95,7 +95,7 @@ namespace ProyectoFinal.BLL
             }
             return cliente;
         }
-
+ 
         public async Task<bool> Eliminar(int id)
         {
             bool Eliminado = false;
