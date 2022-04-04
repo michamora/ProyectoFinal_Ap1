@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 #nullable disable // Para quitar el aviso de nulls
-
+ 
 namespace Models
 {
     public class Categoria // Entidad Categoria
