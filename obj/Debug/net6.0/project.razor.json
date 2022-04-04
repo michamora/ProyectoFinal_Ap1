@@ -12,108 +12,101 @@
   "ProjectWorkspaceState": {
     "TagHelpers": [
       {
-        "HashCode": -1571194727,
+        "HashCode": 1755190575,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Registros.R_Ventas",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "R_Ventas"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "VentaId",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "VentaId"
-            }
+            "TagName": "C_Articulos"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Ventas"
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos"
         }
       },
       {
-        "HashCode": 1164233401,
+        "HashCode": 1606738896,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Registros.R_Ventas",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Pages.Registros.R_Ventas"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "VentaId",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "VentaId"
-            }
+            "TagName": "ProyectoFinal.Pages.Consultas.C_Articulos"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Ventas",
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
       {
-        "HashCode": 839646709,
+        "HashCode": 431075301,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Registros.R_Clientes",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Clientes",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "R_Clientes"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "ClienteId",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "ClienteId"
-            }
+            "TagName": "C_Clientes"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Clientes"
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Clientes"
         }
       },
       {
-        "HashCode": 687567476,
+        "HashCode": -1899059694,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Registros.R_Clientes",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Clientes",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Pages.Registros.R_Clientes"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "ClienteId",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "ClienteId"
-            }
+            "TagName": "ProyectoFinal.Pages.Consultas.C_Clientes"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Clientes",
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Clientes",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 221616854,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Ventas",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "C_Ventas"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Ventas"
+        }
+      },
+      {
+        "HashCode": -1159852425,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Ventas",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProyectoFinal.Pages.Consultas.C_Ventas"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Ventas",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -171,101 +164,108 @@
         }
       },
       {
-        "HashCode": 221616854,
+        "HashCode": 839646709,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Ventas",
+        "Name": "ProyectoFinal.Pages.Registros.R_Clientes",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "C_Ventas"
+            "TagName": "R_Clientes"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "ClienteId",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "ClienteId"
+            }
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Ventas"
+          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Clientes"
         }
       },
       {
-        "HashCode": -1159852425,
+        "HashCode": 687567476,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Ventas",
+        "Name": "ProyectoFinal.Pages.Registros.R_Clientes",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Pages.Consultas.C_Ventas"
+            "TagName": "ProyectoFinal.Pages.Registros.R_Clientes"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "ClienteId",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "ClienteId"
+            }
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Ventas",
+          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Clientes",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
       {
-        "HashCode": 431075301,
+        "HashCode": -1571194727,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Clientes",
+        "Name": "ProyectoFinal.Pages.Registros.R_Ventas",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "C_Clientes"
+            "TagName": "R_Ventas"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "VentaId",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "VentaId"
+            }
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Clientes"
+          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Ventas"
         }
       },
       {
-        "HashCode": -1899059694,
+        "HashCode": 1164233401,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Clientes",
+        "Name": "ProyectoFinal.Pages.Registros.R_Ventas",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Pages.Consultas.C_Clientes"
+            "TagName": "ProyectoFinal.Pages.Registros.R_Ventas"
           }
         ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Clientes",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 1755190575,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
+        "BoundAttributes": [
           {
-            "TagName": "C_Articulos"
+            "Kind": "Components.Component",
+            "Name": "VentaId",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "VentaId"
+            }
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos"
-        }
-      },
-      {
-        "HashCode": 1606738896,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ProyectoFinal.Pages.Consultas.C_Articulos"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos",
+          "Common.TypeName": "ProyectoFinal.Pages.Registros.R_Ventas",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -332,39 +332,6 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "ProyectoFinal.App",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": -1517461321,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Shared.LoginDisplay",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "LoginDisplay"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Shared.LoginDisplay"
-        }
-      },
-      {
-        "HashCode": 1136126089,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Shared.LoginDisplay",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ProyectoFinal.Shared.LoginDisplay"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Shared.LoginDisplay",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -547,6 +514,39 @@
           "Runtime.Name": "Components.None",
           "Common.TypeName": "ProyectoFinal.Shared.MainLayout.Body",
           "Components.IsSpecialKind": "Components.ChildContent",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -1517461321,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Shared.LoginDisplay",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "LoginDisplay"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Shared.LoginDisplay"
+        }
+      },
+      {
+        "HashCode": 1136126089,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Shared.LoginDisplay",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProyectoFinal.Shared.LoginDisplay"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Shared.LoginDisplay",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
