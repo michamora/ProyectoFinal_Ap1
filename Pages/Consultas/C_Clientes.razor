@@ -145,21 +145,28 @@
         lista = new List<Clientes>();
         cliente = new Clientes();
 
-        if (!string.IsNullOrEmpty(Criterio) || !string.IsNullOrWhiteSpace(Criterio))
+        if (Criterio != null)
         {
             switch (Filtro)
             {
                 case "0": //Id
-                    int id = Utilities.ToIntConsulta(Criterio);
-                    if (id == -1)
-                        lista = clienteBLL.GetList(p => p.FechaNacimiento >= fechaDesde && p.FechaNacimiento <= fechaHasta);
+                    if (fechaDesde != null || fechaHasta != null)
+
+                        lista = clienteBLL.GetList(e => e.ClienteId == int.Parse(Criterio) && (e.FechaNacimiento >= fechaDesde && e.FechaNacimiento <=
+                        fechaHasta));
                     else
-                        lista = clienteBLL.GetList(e => e.ClienteId == id && (e.FechaNacimiento >= fechaDesde && e.FechaNacimiento <=
+                        lista = clienteBLL.GetList(e => e.ClienteId == int.Parse(Criterio) && (e.FechaNacimiento >= fechaDesde && e.FechaNacimiento <=
                         fechaHasta));
                     break;
 
                 case "1":
-                    lista = clienteBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()));
+                    if (fechaDesde != null || fechaHasta != null)
+                    
+                        lista = clienteBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= fechaDesde && p.FechaNacimiento <=
+                        fechaHasta));
+                    else
+                        lista = clienteBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= fechaDesde && p.FechaNacimiento <=
+                        fechaHasta));
                     break;
                 
             }
