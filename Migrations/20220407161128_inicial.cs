@@ -64,6 +64,26 @@ namespace ProyectoFinal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Clientes",
+                columns: table => new
+                {
+                    ClienteId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Telefono = table.Column<string>(type: "TEXT", nullable: false),
+                    Celular = table.Column<string>(type: "TEXT", nullable: false),
+                    Direccion = table.Column<string>(type: "TEXT", nullable: false),
+                    Cedula = table.Column<string>(type: "TEXT", nullable: false),
+                    FechaNacimiento = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clientes", x => x.ClienteId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pago",
                 columns: table => new
                 {
@@ -74,27 +94,6 @@ namespace ProyectoFinal.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pago", x => x.PagoId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Ventas",
-                columns: table => new
-                {
-                    VentaId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Total = table.Column<float>(type: "REAL", nullable: false),
-                    ITBIS = table.Column<float>(type: "REAL", nullable: false),
-                    SubTotal = table.Column<float>(type: "REAL", nullable: false),
-                    Existencia = table.Column<float>(type: "REAL", nullable: false),
-                    UnidadesVendidas = table.Column<float>(type: "REAL", nullable: false),
-                    PagoObtenido = table.Column<float>(type: "REAL", nullable: false),
-                    MontoRestante = table.Column<float>(type: "REAL", nullable: false),
-                    MetodoDePago = table.Column<float>(type: "REAL", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ventas", x => x.VentaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,9 +211,9 @@ namespace ProyectoFinal.Migrations
                     Nombre = table.Column<string>(type: "TEXT", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CategoriaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Cantidad = table.Column<float>(type: "REAL", nullable: false),
-                    Costo = table.Column<float>(type: "REAL", nullable: false),
-                    Precio = table.Column<float>(type: "REAL", nullable: false),
+                    Cantidad = table.Column<double>(type: "REAL", nullable: false),
+                    Costo = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Precio = table.Column<decimal>(type: "TEXT", nullable: false),
                     ITBIS = table.Column<float>(type: "REAL", nullable: false),
                     UsuarioId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -230,30 +229,30 @@ namespace ProyectoFinal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clientes",
+                name: "Ventas",
                 columns: table => new
                 {
-                    ClienteId = table.Column<int>(type: "INTEGER", nullable: false)
+                    VentaId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PagoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Nombre = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Telefono = table.Column<string>(type: "TEXT", nullable: false),
-                    Celular = table.Column<string>(type: "TEXT", nullable: false),
-                    Direccion = table.Column<string>(type: "TEXT", nullable: false),
-                    Cedula = table.Column<string>(type: "TEXT", nullable: false),
-                    FechaNacimiento = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Total = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ITBIS = table.Column<decimal>(type: "TEXT", nullable: false),
+                    SubTotal = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Existencia = table.Column<double>(type: "REAL", nullable: false),
+                    UnidadesVendidas = table.Column<double>(type: "REAL", nullable: false),
+                    PagoObtenido = table.Column<decimal>(type: "TEXT", nullable: false),
+                    MontoRestante = table.Column<decimal>(type: "TEXT", nullable: false),
+                    MetodoDePago = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PagoId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clientes", x => x.ClienteId);
+                    table.PrimaryKey("PK_Ventas", x => x.VentaId);
                     table.ForeignKey(
-                        name: "FK_Clientes_Pago_PagoId",
+                        name: "FK_Ventas_Pago_PagoId",
                         column: x => x.PagoId,
                         principalTable: "Pago",
-                        principalColumn: "PagoId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PagoId");
                 });
 
             migrationBuilder.CreateTable(
@@ -265,8 +264,11 @@ namespace ProyectoFinal.Migrations
                     VentaId = table.Column<int>(type: "INTEGER", nullable: false),
                     ClienteId = table.Column<int>(type: "INTEGER", nullable: false),
                     ArticuloId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Cantidad = table.Column<float>(type: "REAL", nullable: false),
-                    PrecioArticulo = table.Column<double>(type: "REAL", nullable: false)
+                    PagoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Cantidad = table.Column<double>(type: "REAL", nullable: false),
+                    PrecioArticulo = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Descripcion = table.Column<string>(type: "TEXT", nullable: false),
+                    Importe = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -368,8 +370,8 @@ namespace ProyectoFinal.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clientes_PagoId",
-                table: "Clientes",
+                name: "IX_Ventas_PagoId",
+                table: "Ventas",
                 column: "PagoId");
 
             migrationBuilder.CreateIndex(
@@ -413,9 +415,6 @@ namespace ProyectoFinal.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Pago");
-
-            migrationBuilder.DropTable(
                 name: "Articulo");
 
             migrationBuilder.DropTable(
@@ -423,6 +422,9 @@ namespace ProyectoFinal.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categoria");
+
+            migrationBuilder.DropTable(
+                name: "Pago");
         }
     }
 }

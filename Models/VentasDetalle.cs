@@ -16,10 +16,20 @@ namespace Models
         public int ClienteId { get; set; }
             
         public int ArticuloId { get; set; }
-        
-        public float Cantidad { get; set; }
 
-        public double PrecioArticulo { get; set; }
+        public int PagoId { get; set; }   
+        
+        public double Cantidad { get; set; }
+
+        public decimal PrecioArticulo { get; set; }
+
+        public string Descripcion { get; set; }
+
+        public decimal Importe { get; set; }
+
+        public virtual Articulo articulo {get; set;}
+
+        public Ventas venta { get; set; } = new Ventas();
         
 
         //-------------------------------------------------------------------------------------
@@ -31,18 +41,22 @@ namespace Models
             VentaId = 0;
             ClienteId = 0;
             ArticuloId = 0;
+            PagoId = 0;
             Cantidad = 0;    
-            PrecioArticulo = 0;     
+            PrecioArticulo = 0;  
+            Descripcion = string.Empty;  
         }
 
-        public VentasDetalle(int id, int ventaId, int clienteId, int articuloId, int cantidad, double precioArticulo)
+        public VentasDetalle(int id, int ventaId, int clienteId, int articuloId, int pagoid, int cantidad, decimal precioArticulo, string descripcion)
         {
             Id = id;
             VentaId = ventaId;
             ClienteId = clienteId;
             ArticuloId = articuloId;
+            PagoId = pagoid;
             Cantidad = cantidad;
             PrecioArticulo = precioArticulo;
+            Descripcion = descripcion;
            
         }
 

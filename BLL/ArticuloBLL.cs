@@ -35,18 +35,39 @@ namespace ProyectoFinal.BLL
             return existe;
         }
 
-        public async Task<bool> Guardar(Articulo articulo)
+         public Articulo ExisteNombre(string Nombre)
         {
-             
-            if (!Existe(articulo.ArticuloId))
-                return await Insertar(articulo);
-            else
-                return await Modificar(articulo);
+            Articulo existe;
+
+            try
+            {
+                existe = contexto.Articulo                
+                .Where( p => p.Nombre
+                .ToLower() == Nombre.ToLower())
+                .AsNoTracking()
+                .SingleOrDefault();
+
+            }catch
+            {
+                throw;
+            }
+            return existe;
         }
 
         
 
-        private async Task<bool> Insertar(Articulo articulo)
+        public bool Guardar(Articulo articulo)
+        {
+             
+            if (!Existe(articulo.ArticuloId))
+                return  Insertar(articulo);
+            else
+                return  Modificar(articulo);
+        }
+
+        
+
+        private bool Insertar(Articulo articulo)
         {
             bool Insertado = false;
 
@@ -54,7 +75,7 @@ namespace ProyectoFinal.BLL
             {
                 if (contexto.Articulo.Add(articulo) != null)
                 {
-                    Insertado = await contexto.SaveChangesAsync() > 0;
+                    Insertado =  contexto.SaveChanges() > 0;
                 }
             }
             catch (Exception)
@@ -64,14 +85,14 @@ namespace ProyectoFinal.BLL
             return Insertado;
         }
 
-        private async Task<bool> Modificar(Articulo articulo)
+        private bool Modificar(Articulo articulo)
         {
             bool Insertado = false;
 
             try
             {
                 contexto.Entry(articulo).State = EntityState.Modified;
-                Insertado = await contexto.SaveChangesAsync() > 0;
+                Insertado = contexto.SaveChanges() > 0;
 
             }
             catch (Exception)

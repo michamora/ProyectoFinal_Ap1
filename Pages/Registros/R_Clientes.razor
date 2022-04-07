@@ -84,17 +84,6 @@
                    </div>
 
                    
-                         <div class="form-group col-2">
-                        <label>Metodo de pago <div class="oi oi-credit-card" ></div></label>
-                        <InputSelect @bind-Value="cliente.PagoId" class="form-select text-14">
-                            <option value="0" disabled selected>Seleccionar</option>
-                            @foreach (var item in MetodoPagoList)
-                            {
-                                <option value="@item.PagoId">@item.Metodo</option>
-                            }
-                        </InputSelect>
-                        <ValidationMessage For="@(() => cliente.PagoId)" />
-                    </div> 
                 
 
                     
@@ -156,11 +145,7 @@
     
     [Inject]
     public ClientesBLL clienteBLL { get; set; }  // Inyectando BLL
-
-    [Inject]
-    public PagoBLL pagoBLL { get; set; }  // Inyectando BLL
-
-    List<Pago> MetodoPagoList  = new List<Pago>();    
+   
 
     [Parameter]
     public int ClienteId { get; set; }
@@ -172,7 +157,7 @@
     {          
        
        cliente = new Clientes();
-       MetodoPagoList = pagoBLL.GetList(c => true);
+       
        
        cliente.ClienteId = ClienteId;
        Buscar();         
@@ -181,19 +166,17 @@
     public void Nuevo()  // Nuevo cliente
     {
         cliente = new Clientes();
-        MetodoPagoList = pagoBLL.GetList(c => true);
-        
-        Toast.ShowInfo("Nuevo cliente");       
+             
     }
 
-    public async Task Guardar()  // Guardar cliente
+    public void Guardar()  // Guardar cliente
     {
-        bool guardo;
-         
+        var cliente2 = clienteBLL.ExisteCedula(cliente.Cedula);
         
-        guardo = await clienteBLL.Guardar(cliente);
+        if(cliente2 == null) //si no existe lo guarda
+        {
 
-        if (guardo)
+        if (clienteBLL.Guardar(cliente))
         {
             
             Toast.ShowSuccess($"Cliente: {cliente.Nombre}, Guardado correctamente");
@@ -201,6 +184,28 @@
         }
         else
             Toast.ShowError("No se pudo guardar");
+    
+     }else // si existe, no guarda porque esa cedula pertenece a otra persona
+        {
+            if(cliente2.Cedula.ToLower() == cliente.Cedula.ToLower() && cliente2.ClienteId == cliente.ClienteId) 
+            {
+                if (clienteBLL.Guardar(cliente))
+                {
+                    
+            Toast.ShowSuccess($"Cliente: {cliente.Nombre}, Guardado correctamente");
+            cliente = new Clientes();
+                }
+
+                else
+                    Toast.ShowError("No fue posible guardar");
+            }
+            else
+            {
+                Toast.ShowError($"Cedula: {cliente.Cedula}, pertenece a otra persona" );
+            }
+
+            
+        }
     }
 
     public void Buscar() // Buscar cliente

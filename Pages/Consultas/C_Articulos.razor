@@ -88,7 +88,7 @@
                 {
                 @foreach (var item in lista)
                 {
-
+                     Fecha = DateOnly.FromDateTime(item.FechaCreacion);
                      descripcion = categoriaBLL.Buscar(item.CategoriaId);
                         if(descripcion==null)break;
                     <tr>
@@ -106,7 +106,7 @@
 
                         <td>@item.ITBIS %</td>
 
-                        <td>@item.FechaCreacion</td>
+                        <td>@Fecha</td>
                                              
                          <td><a class="btn btn-sm btn-outline-success oi oi-eye" href="articulo/@item.ArticuloId"></a>
                         </td>
@@ -125,6 +125,8 @@
     public string Criterio;
     private DateTime fechaDesde { get; set; } = new DateTime(2020, 4, 2);
     private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
+
+    public DateOnly Fecha { get; set; } 
 
     public List<Articulo> lista { get; set; } = new List<Articulo>();
 

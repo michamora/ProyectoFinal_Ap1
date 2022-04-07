@@ -21,20 +21,20 @@ namespace Models
         public DateTime FechaCreacion { get; set; }
 
         [Required(ErrorMessage = "Campo categoria es obligatorio.")]
-        [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "Seleccione la categoria del articulo.")]
+        [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "Seleccione la categoria del articulo.")] 
         public int CategoriaId { get; set; }
 
         [Required]
         [Range(1, float.MaxValue, ErrorMessage = "Ingrese la cantidad del articulo.")]
-        public float Cantidad { get; set; }
+        public double Cantidad { get; set; }
 
         [Required]
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "Ingrese un costo mayor a 0.")]
-        public float Costo { get; set; }
+        public decimal Costo { get; set; }
 
         [Required]
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "Ingrese un precio mayor a 0.")]
-        public float Precio { get; set; }
+        public decimal Precio { get; set; }
 
         [Required(ErrorMessage = "Campo ITBIS es obligatorio.")]
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "Seleccione el % de ITBIS.")]

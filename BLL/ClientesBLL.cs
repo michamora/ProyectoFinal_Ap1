@@ -39,24 +39,45 @@ namespace ProyectoFinal.BLL
             return existe;
         }
 
-        public async Task<bool> Guardar(Clientes clientes)
+       
+
+         public Clientes ExisteCedula(string Cedula)
+        {
+            Clientes existe;
+
+            try
+            {
+                existe = contexto.Clientes               
+                .Where( p => p.Cedula
+                .ToLower() == Cedula.ToLower())
+                .AsNoTracking()
+                .SingleOrDefault();
+
+            }catch
+            {
+                throw;
+            }
+            return existe;
+        }
+
+        public bool Guardar(Clientes clientes)
         {
             if (!Existe(clientes.ClienteId))
-                return await Insertar(clientes);
+                return Insertar(clientes);
             else
-                return await Modificar(clientes);
+                return Modificar(clientes);
         }
 
       
 
-        private async Task<bool> Insertar(Clientes clientes)
+        private bool Insertar(Clientes clientes)
         {
             bool Insertado = false;
 
             try
             {
                 contexto.Clientes.Add(clientes);
-                Insertado = await contexto.SaveChangesAsync() > 0;
+                Insertado = contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -65,14 +86,14 @@ namespace ProyectoFinal.BLL
             return Insertado;
         }
 
-        private async Task<bool> Modificar(Clientes clientes)
+        private bool Modificar(Clientes clientes)
         {
             bool Insertado = false;
 
             try
             {
                 contexto.Entry(clientes).State = EntityState.Modified;
-                Insertado = await contexto.SaveChangesAsync() > 0;
+                Insertado =  contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {

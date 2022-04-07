@@ -15,21 +15,24 @@ namespace Models
 
         [DataType(DataType.Date)]  
         public DateTime Fecha { get; set; } 
-        public float Total { get; set; }
-        public float ITBIS { get; set; }
-        public float SubTotal { get; set; }
-        public float Existencia { get; set; }
-
-        public float UnidadesVendidas { get; set;}
+        public decimal Total { get; set; }
+        public decimal ITBIS { get; set; }
+        public decimal SubTotal { get; set; }
+        public double Existencia { get; set; }
+        public double UnidadesVendidas { get; set;}
 
         [Required(ErrorMessage = "Ingrese el monto a pagar.")]
-        public float PagoObtenido { get; set;}
+        public decimal PagoObtenido { get; set;}
 
-        public float MontoRestante { get; set;}
+        public decimal MontoRestante { get; set;}
 
-        public float MetodoDePago { get; set;}
+        public decimal MetodoDePago { get; set;}
+
 
         //-------------------------------------------------------------------------------------
+
+        [ForeignKey("PagoId")]
+        public virtual Pago Pago { get; set; } 
 
         
         [ForeignKey("VentaId")]

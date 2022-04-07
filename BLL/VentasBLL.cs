@@ -51,12 +51,16 @@ namespace ProyectoFinal.BLL
 
         private bool Insertar(Ventas ventas)
         { 
-            bool Insertado = false;
+             bool Insertado = false;
 
             try
             {
                 if (contexto.Ventas.Add(ventas) != null)
                 {
+                    foreach (var item in ventas.ventasDetalle)
+                    {
+                        item.articulo.Cantidad -= item.Cantidad;
+                    }
                     Insertado =  contexto.SaveChanges() > 0;
                 }
             }
@@ -66,6 +70,7 @@ namespace ProyectoFinal.BLL
             }
             return Insertado;
         }
+
         private bool Modificar(Ventas ventas)
         {
             bool Insertado = false;
@@ -76,6 +81,8 @@ namespace ProyectoFinal.BLL
                 foreach (var item in ventas.ventasDetalle)
                 {
                     contexto.Entry(item).State = EntityState.Added;
+
+                    item.articulo.Cantidad -= item.Cantidad;
                 }
 
                 contexto.Entry(ventas).State = EntityState.Modified;
@@ -87,6 +94,7 @@ namespace ProyectoFinal.BLL
             }
             return Insertado;
         }
+        
         public Ventas Buscar(int id)
          {
             Ventas ventas;
@@ -107,23 +115,31 @@ namespace ProyectoFinal.BLL
     
         public bool Eliminar(int id)
         {
-            bool Eliminado = false;
+            bool paso = false;
 
             try
             {
-                var ventas =  Buscar(id);
+                            
+               var venta = contexto.Ventas.Find(id);
 
-                if (ventas!= null)
-                {
-                    contexto.Ventas.Remove(ventas);
-                    Eliminado = contexto.SaveChanges() > 0;
+                if (venta != null)
+                {      
+
+                    foreach (var item in venta.ventasDetalle)
+                    {
+                        item.articulo.Cantidad += item.Cantidad;
+                    }
+
+
+                    contexto.Ventas.Remove(venta);
+                    paso = contexto.SaveChanges() > 0;
                 }
             }
             catch (Exception)
             {
                 throw;
             }
-            return Eliminado;
+            return paso;
         }
 
         public List<Ventas> GetList(Expression<Func<Ventas, bool>> ventas)

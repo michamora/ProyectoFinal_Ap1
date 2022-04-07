@@ -11,10 +11,6 @@ namespace Models
     {
         [Key]
         public int ClienteId { get; set; }
-        
-        [Required(ErrorMessage = "Campo metodo de pago es obligatorio.")]
-        [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "Seleccione el metodo de pago.")]      
-        public int PagoId { get; set; } 
 
         [Required(ErrorMessage = "Ingrese un nombre.")]
         public string Nombre { get; set; }
@@ -42,8 +38,7 @@ namespace Models
         public DateTime FechaNacimiento { get; set; }
         public int UsuarioId { get; set; }
 
-        [ForeignKey("PagoId")]
-        public virtual Pago Pago { get; set; }      
+             
 
         //-------------------------------------------------------------------------------------
 

@@ -40,20 +40,14 @@
                 <br>
                                  
                         @*...................... Fecha ......................*@
+                        <div class="row">
 
                     <div class="form-group col-md-2">
                             <label>Fecha</label>
                             <InputDate @bind-Value="venta.Fecha" class="form-control col-8" />
                         </div>
-                    <hr>
-                        
-
+                       
                         @*...................... Cliente ......................*@
-
-                      
-                         <div class="row">
-
-                        <div class="form-group col-md-1"></div>
 
                         <div class="form-group col-md-3">
                         <label>Cliente <div class="oi oi-person" ></div></label>
@@ -66,10 +60,13 @@
                         </select>
                         
                     </div>
-
-
+                    </div>
+                    <hr>
+                                                                     
+                         <div class="row">                       
                          @*...................... Articulo ......................*@
-
+                          <div class="form-group col-md-1"></div>
+                         
                      <div class="form-group col-md-3">
                         <label>Articulo <div class="oi oi-beaker" ></div></label>
                          <select  @bind="ArticuloSeleccionado" class="form-select text-14" @onfocusout="ObtenerDatosArticulo">
@@ -81,6 +78,11 @@
                          </select>
                          
                      </div>
+
+                      <div class="form-group col-md-2">
+                        <label>Unidades</label>
+                        <InputNumber @bind-Value="venta.Existencia" class="form-control col-5" readOnly="true" />
+                    </div>
 
 
                          @*...................... Cantidad ......................*@
@@ -107,15 +109,19 @@
                          <thead class="thead">
                            <tr class="table">
                                     
-                                    <th>Id</th>
+                                   
 
-                                    <th>Cliente Id</th>
+                                   <th></th>
 
                                     <th>Articulo Id</th>
+
+                                    <th>Descripcion</th>
 
                                     <th>Cantidad</th>
 
                                     <th>Precio</th>
+
+                                    <th>Importe</th>
                                     
                                 </tr>
                             </thead>
@@ -125,13 +131,15 @@
                               {
                                 @foreach (var item in venta.ventasDetalle)
                                 {
+                                    
                                     <tr>
                                         
-                                        <td>@item.Id</td>
-                                        <td>@item.ClienteId</td>
+                                        <td></td>
                                         <td>@item.ArticuloId</td>
+                                        <td>@item.Descripcion</td>
                                         <td>@item.Cantidad</td>
-                                        <td>RD$ @item.PrecioArticulo</td>                                     
+                                        <td>RD$ @item.PrecioArticulo</td> 
+                                         <td>RD$ @importe</td>                                    
                                         
                                         <td><span class="oi oi-trash text-danger oi oi-x" href="#" title='Remover Detalle' @onclick=" (() => RemoverDetalle(item)) "> </span></td>
                                     </tr>
@@ -140,22 +148,27 @@
                             </tbody>
                         </table>                   
                      <hr>
+
+                     @*...................... Metodo de pago ......................*@
+
                      <div class="row">
-                     <div class="form-group col-md-2">
-                        <label>Articulo Unidades</label>
-                        <InputNumber @bind-Value="venta.Existencia" class="form-control col-5" readOnly="true" />
-                    </div>
+                                                           
+                         <div class="form-group col-2">
+                        <label>Metodo de pago <div class="oi oi-credit-card" ></div></label>
+                        <select  @bind="PagoSeleccionado" class="form-select text-14" @onfocusout="ObtenerPago">
+                            <option value="0" disabled selected>Seleccionar</option>
+                            @foreach (var item in MetodoPagoList)
+                            {
+                                <option value="@item.PagoId">@item.Metodo</option>
+                                
+                            }
+                        </select>                                               
+                    </div> 
 
                     <div class="form-group col-md-4"></div>
-
-                    
-                                           
-                    
-
+                                                                 
                          @*...................... Subtotal ......................*@
-
            
-
             <div class="form-group col-md-2">
                     <label >SubTotal</label>
                     <InputNumber @bind-Value="venta.SubTotal" class="form-control col" readOnly="true"  />
@@ -165,7 +178,7 @@
                      @*...................... ITBIS ......................*@
 
                 <div class="form-group col-md-2">
-                    <label>% ITBIS</label>
+                    <label>ITBIS</label>
                    <InputNumber @bind-Value="venta.ITBIS" class="form-control col" readOnly="true" />
                     
                 </div>
@@ -240,21 +253,28 @@
 
     public int ArticuloSeleccionado { get; set; }
 
-    public float precioArticulo { get; set; }
+    public int PagoSeleccionado { get; set; }
 
-    public float existenciaArticulo { get; set; }
+    public decimal precioArticulo { get; set; }
 
-    public float ITBIS { get; set;}
+     public decimal importe { get; set; }
 
-    public float SubTotal { get; set;}
+    public string descripcion { get; set; }
 
-    public float Total { get; set;}
+    public decimal existenciaArticulo { get; set; }
+
+    public decimal ITBIS { get; set;}
+
+    public decimal SubTotal { get; set;}
+
+    public decimal Total { get; set;}
 
     List<Clientes> ClienteList  = new List<Clientes>();
 
     List<Articulo> ArticuloList  = new List<Articulo>();
 
-    
+    List<Pago> MetodoPagoList  = new List<Pago>(); 
+  
 
     //-----------------------------------------------------------------------
 
@@ -267,6 +287,8 @@
     [Inject]
     public ClientesBLL clienteBLL { get; set; }
 
+    [Inject]
+    public PagoBLL pagoBLL { get; set; }  
     
 
     //-------------------------------------------------------------------------
@@ -276,15 +298,17 @@
         this.venta.VentaId = VentaId;
         ArticuloList = articuloBLL.GetList(p => true);
         ClienteList = clienteBLL.GetList(p => true);
+        MetodoPagoList = pagoBLL.GetList(c => true);
      
         Buscar();
     }
 
     public void Nuevo() // Nueva venta
     {
-        Toast.ShowInfo("Nueva Venta");
+        
         cantidad = 0;
         precioArticulo = 0;
+        descripcion = string.Empty;
         ArticuloSeleccionado = 0;
         SubTotal = 0;
         ITBIS = 0;
@@ -295,7 +319,8 @@
         venta = new Ventas();
         Detalle = new VentasDetalle();
         ArticuloList = articuloBLL.GetList(p => true);
-        ClienteList = clienteBLL.GetList(p => true);      
+        ClienteList = clienteBLL.GetList(p => true);     
+        MetodoPagoList = pagoBLL.GetList(c => true); 
           
     }
 
@@ -306,12 +331,17 @@
         if (auxArticulo != null)
         {
             precioArticulo = auxArticulo.Precio; // Mostrando el precio del articulo seleccionado
-            venta.Existencia = auxArticulo.Cantidad; // Mostrando la cantidad de unidades del articulo seleccionado
+            descripcion = auxArticulo.Nombre; // Obteniendo el nombre del articulo
 
-            venta.ITBIS = auxArticulo.ITBIS; // Mostrando el % de ITBIS del articulo seleccionado
-            venta.SubTotal = auxArticulo.Precio * Detalle.Cantidad; // Mostrando el subtotal de esa venta
+            venta.Existencia = auxArticulo.Cantidad; // Mostrando la cantidad de unidades del articulo seleccionado     
+            
+            venta.SubTotal = auxArticulo.Precio * Convert.ToDecimal(Detalle.Cantidad); // Mostrando el subtotal de esa venta
+ 
+            ITBIS = venta.SubTotal * 18 / 100; // Calculo de ITBIS
 
-            venta.Existencia = auxArticulo.Cantidad - Detalle.Cantidad; // Atualizando cantidad reducida de articulos          
+            venta.ITBIS = ITBIS;
+
+            venta.Existencia = auxArticulo.Cantidad - Detalle.Cantidad; // Actualizando cantidad reducida de articulos          
  
         }
     }
@@ -325,11 +355,10 @@
 
          venta.UnidadesVendidas = Detalle.Cantidad; // Las unidades que se vendieron
 
-         auxArticulo.Cantidad -= Detalle.Cantidad; // Reduciendo la cantidad de unidades vendidas del articulo
-
      } 
 
-    }
+    }       
+
 
     private void ObtenerDevuelta() // Devuelta que le sobra al cliente
     {
@@ -339,12 +368,40 @@
         {
             if (venta.PagoObtenido > venta.Total)
             {
+            
               venta.MontoRestante = venta.PagoObtenido - venta.Total;
             } 
-            
         }
+        
     }
 
+     private void ObtenerPago() // Metodos de pago
+    {
+        
+         switch (PagoSeleccionado)
+            {
+                case 1: 
+                   venta.PagoObtenido = venta.Total;
+                   venta.MontoRestante = venta.PagoObtenido - venta.Total;
+
+                break;
+
+                case 2: 
+                   // El pago lo podra ingresar la persona
+
+                break;
+
+                case 3: 
+                   venta.PagoObtenido = venta.Total;
+                   venta.MontoRestante = venta.PagoObtenido - venta.Total;
+
+                break;
+            }
+    
+        
+        } 
+        
+       
     public void Guardar() // Guardar venta
     {
         if (Detalle.ClienteId == 0) // Validacion
@@ -364,6 +421,12 @@
             return;
         }
 
+        if (PagoSeleccionado == 0) // Validacion
+        {
+            Toast.ShowWarning("Seleccione un metodo de pago");
+            return;
+        }
+
         if (venta.PagoObtenido == 0) // Validacion
         {
             Toast.ShowWarning("Ingrese el monto de pago obtenido.");
@@ -375,10 +438,7 @@
         {
             Toast.ShowWarning("El pago debe ser mayor o igual al Total");
             return;
-        }
-
-       
-        
+        }   
 
         bool guardado;
 
@@ -389,9 +449,11 @@
 
         if (guardado)
         {
-            ArticuloSeleccionado = 0;
+           
             venta = new Ventas();
             Detalle = new VentasDetalle();
+            ArticuloSeleccionado = 0;
+            PagoSeleccionado = 0;
 
             Toast.ShowSuccess("Guardado correctamente");         
             
@@ -400,7 +462,6 @@
             Toast.ShowError("No fue posible guardar");
     
     }
-
 
     protected void Buscar() // Buscar Ventas registradas
     {
@@ -414,6 +475,7 @@
                 
                 Toast.ShowSuccess($"Venta : {venta.VentaId}, encontrada");
                 // Indicando el id de la venta encontrada
+                
             }
             else
             {
@@ -451,20 +513,24 @@
         }
         else
         {
+            
          
        this.venta.ventasDetalle.Add(new VentasDetalle 
             {
-                VentaId = VentaId,
-                ClienteId = Detalle.ClienteId,
-                ArticuloId = ArticuloSeleccionado,         // Agregando el detalle
+                ArticuloId = ArticuloSeleccionado, 
+                PagoId = PagoSeleccionado,
+                Descripcion = descripcion,         // Agregando el detalle
                 Cantidad = Detalle.Cantidad,
-                PrecioArticulo = precioArticulo
-                
+                PrecioArticulo = precioArticulo,
+                Importe = importe           
 
             });
         }          
-             CalculoTotal();      
-             ObtenerDatosArticulo();                    
+             MostrarImporte();      
+             ObtenerDatosArticulo();     
+
+            venta.Total += (venta.SubTotal + ITBIS); // Mostrando el total que hace esa venta   
+                            
          
     }
 
@@ -473,31 +539,31 @@
         
         Toast.ShowInfo("Detalle removido");
         this.venta.ventasDetalle.Remove(item); 
-     
+
+        Articulo auxArticulo = articuloBLL.Buscar(ArticuloSeleccionado);
+
+        if (auxArticulo != null)
+        {
+
+            venta.Existencia = auxArticulo.Cantidad;
+             
+        }
     } 
 
 
-    public void CalculoTotal() // Calculando el Total
+    public void MostrarImporte() // Calculando el Total
     {
        Articulo auxArticulo = articuloBLL.Buscar(ArticuloSeleccionado);
 
         if (auxArticulo != null)
         {
-            precioArticulo = auxArticulo.Precio; // Precio del articulo seleccionado
+            precioArticulo = auxArticulo.Precio; // Precio del articulo seleccionado      
 
-            existenciaArticulo = auxArticulo.Cantidad; // Unidades del articulo seleccionado
-
-            venta.ITBIS = auxArticulo.ITBIS; // %ITBIS del articulo seleccionado
-
-            venta.SubTotal = auxArticulo.Precio * Detalle.Cantidad; // Subtotal del articulo seleccionado
-
-            ITBIS = venta.SubTotal * 18 / 100; // Calculo de ITBIS
-
-            venta.Total += (venta.SubTotal + ITBIS); // Mostrando el total que hace esa venta                            
+            importe = auxArticulo.Precio * Convert.ToDecimal(Detalle.Cantidad); // Importe, cantidad por precio   
+                               
         }
 
     }
-
 
     public void Eliminar() // Eliminar venta registrada
     {

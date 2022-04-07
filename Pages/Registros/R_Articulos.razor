@@ -106,7 +106,6 @@
                         <InputSelect @bind-Value="articulo.ITBIS" class="form-select text-14">
                         <option value="0" disabled selected>Seleccione un %</option>
                             <option value="0">0%</option>
-                            <option value="16">16%</option>
                             <option value="18">18%</option>
                         </InputSelect>
                         <ValidationMessage For="@(() => articulo.ITBIS)" />
@@ -171,12 +170,10 @@
     public async Task Nuevo() // Nuevo articulo
     {
         articulo = new Articulo();
-        CategoriaList = await categoriaBLL.GetList(c => true);
-   
-        Toast.ShowInfo("Nuevo articulo");       
+        CategoriaList = await categoriaBLL.GetList(c => true);     
     }
 
-    public async Task Guardar() // Guardar articulo
+    public void Guardar() // Guardar articulo
     {
         if (articulo.Precio < articulo.Costo)
         {
@@ -184,12 +181,10 @@
             return;
         }
 
-        bool guardado;
-
-        
-        guardado = await articuloBLL.Guardar(articulo); 
-
-        if (guardado)
+       var articulo2 = articuloBLL.ExisteNombre(articulo.Nombre);
+        if(articulo2 == null) //si no existe
+        {
+        if (articuloBLL.Guardar(articulo))
         {
             
             Toast.ShowSuccess($"Articulo: {articulo.Nombre}, Guardado correctamente");
@@ -197,6 +192,26 @@
         }
         else
             Toast.ShowError("No fue posible guardar");
+
+     }else // si existe
+        {
+            if(articulo2.Nombre.ToLower()==articulo.Nombre.ToLower() && articulo2.ArticuloId == articulo.ArticuloId) 
+            {
+                if (articuloBLL.Guardar(articulo))
+                {
+
+                    
+                    Toast.ShowSuccess($"Articulo: {articulo.Nombre}, Guardado correctamente");
+                    articulo = new Articulo();
+                }
+                else
+                    Toast.ShowError("No fue posible guardar");
+            }
+            else
+            {
+                Toast.ShowError($"Articulo: {articulo.Nombre}, ya esta registrado" );
+            }
+        }
     }
 
     public void Buscar() // Buscar articulo
