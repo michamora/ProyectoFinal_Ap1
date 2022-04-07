@@ -32,7 +32,7 @@ public class ApplicationDbContext : IdentityDbContext<Usuarios,IdentityRole<int>
         );
   
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Pago>().HasData(
+        modelBuilder.Entity<Pago>().HasData(  
 
         new Pago { PagoId = 1, Metodo = "Deposito"},
         new Pago { PagoId = 2, Metodo = "Efectivo"},             // Metodos de pago
