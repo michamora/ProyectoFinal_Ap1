@@ -30,7 +30,7 @@ public class ApplicationDbContext : IdentityDbContext<Usuarios,IdentityRole<int>
         new Categoria { CategoriaId = 4, Descripcion = "Vegetales"},
         new Categoria { CategoriaId = 5, Descripcion = "Carnes"}
         );
-  
+      
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Pago>().HasData(  
 
