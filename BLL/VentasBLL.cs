@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-  
+      
 #nullable disable // Para quitar el aviso de nulls
 
 namespace ProyectoFinal.BLL
@@ -94,7 +94,7 @@ namespace ProyectoFinal.BLL
             }
             return Insertado;
         }
-        
+
         public Ventas Buscar(int id)
          {
             Ventas ventas;
