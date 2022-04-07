@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-
+    
 namespace ProyectoFinal.Migrations
 {
     public partial class inicial : Migration
