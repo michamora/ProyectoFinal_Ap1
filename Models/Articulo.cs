@@ -11,7 +11,7 @@ namespace Models
 {
     public class Articulo // Entidad Articulo
     {
-        [Key]
+        [Key]  
         public int ArticuloId { get; set; }
 
         [Required(ErrorMessage = "Ingrese el nombre del articulo.")]

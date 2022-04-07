@@ -11,7 +11,7 @@ namespace Models
     public class Ventas // Entidad Ventas
     {
         [Key]
-        public int VentaId { get; set; } 
+        public int VentaId { get; set; }   
 
         [DataType(DataType.Date)]  
         public DateTime Fecha { get; set; } 

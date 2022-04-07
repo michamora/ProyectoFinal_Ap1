@@ -12,7 +12,7 @@ namespace Models
         [Key]
        
         public int Id { get; set; }
-    
+      
         public int VentaId { get; set; }
      
         public int ClienteId { get; set; }

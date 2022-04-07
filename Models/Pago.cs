@@ -10,7 +10,7 @@ namespace Models
 {
     public class Pago // Entidad Pago
     {
-        [Key]
+        [Key]  
         public int PagoId { get; set; }
 
         [Required(ErrorMessage = "Campo obligatorio. Seleccione un metodo de pago")]

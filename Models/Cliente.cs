@@ -9,7 +9,7 @@ namespace Models
 {
     public class Clientes // Entidad clientes
     {
-        [Key]
+        [Key]  
         public int ClienteId { get; set; }
 
         [Required(ErrorMessage = "Ingrese un nombre.")]

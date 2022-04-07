@@ -10,7 +10,7 @@ namespace Models
 {  
     public class Categoria // Entidad Categoria
     {
-        [Key]
+        [Key]  
         public int CategoriaId { get; set; }
 
         [Required(ErrorMessage = "Campo obligatorio. Seleccione una categoria")]
