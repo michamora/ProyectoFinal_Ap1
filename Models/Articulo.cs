@@ -7,7 +7,7 @@ using System.Text;
 
 #nullable disable // Para quitar el aviso de nulls
  
-namespace Models
+namespace Models  
 {
     public class Articulo // Entidad Articulo
     {
