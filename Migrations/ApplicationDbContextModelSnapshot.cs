@@ -521,17 +521,21 @@ namespace ProyectoFinal.Migrations
 
             modelBuilder.Entity("Models.VentasDetalle", b =>
                 {
-                    b.HasOne("Models.Articulo", null)
+                    b.HasOne("Models.Articulo", "articulo")
                         .WithMany("VentasDetalle")
                         .HasForeignKey("ArticuloId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Models.Ventas", null)
+                    b.HasOne("Models.Ventas", "venta")
                         .WithMany("ventasDetalle")
                         .HasForeignKey("VentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("articulo");
+
+                    b.Navigation("venta");
                 });
 
             modelBuilder.Entity("Models.Articulo", b =>

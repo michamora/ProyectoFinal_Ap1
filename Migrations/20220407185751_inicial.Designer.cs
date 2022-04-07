@@ -11,7 +11,7 @@ using ProyectoFinal.Data;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220407161128_inicial")]
+    [Migration("20220407185751_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -523,17 +523,21 @@ namespace ProyectoFinal.Migrations
 
             modelBuilder.Entity("Models.VentasDetalle", b =>
                 {
-                    b.HasOne("Models.Articulo", null)
+                    b.HasOne("Models.Articulo", "articulo")
                         .WithMany("VentasDetalle")
                         .HasForeignKey("ArticuloId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Models.Ventas", null)
+                    b.HasOne("Models.Ventas", "venta")
                         .WithMany("ventasDetalle")
                         .HasForeignKey("VentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("articulo");
+
+                    b.Navigation("venta");
                 });
 
             modelBuilder.Entity("Models.Articulo", b =>
