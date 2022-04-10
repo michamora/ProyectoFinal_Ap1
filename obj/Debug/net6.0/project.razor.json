@@ -12,39 +12,6 @@
   "ProjectWorkspaceState": {
     "TagHelpers": [
       {
-        "HashCode": 1755190575,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "C_Articulos"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos"
-        }
-      },
-      {
-        "HashCode": 1606738896,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ProyectoFinal.Pages.Consultas.C_Articulos"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": 431075301,
         "Kind": "Components.Component",
         "Name": "ProyectoFinal.Pages.Consultas.C_Clientes",
@@ -107,6 +74,39 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Ventas",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1755190575,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "C_Articulos"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos"
+        }
+      },
+      {
+        "HashCode": 1606738896,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Consultas.C_Articulos",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProyectoFinal.Pages.Consultas.C_Articulos"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Consultas.C_Articulos",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
