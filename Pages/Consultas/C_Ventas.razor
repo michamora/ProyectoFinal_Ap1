@@ -117,8 +117,8 @@
     public string Filtro;
     public string Criterio;
 
-    private DateTime fechaDesde { get; set; } = new DateTime(2020, 4, 2);
-    private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
+    private DateTime fechaDesde { get; set; } = new DateTime(2022, 4, 10);
+    private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 10);
     
     public Ventas venta { get; set; } = new Ventas();
     public List<Ventas> lista { get; set; } = new List<Ventas>();
@@ -143,14 +143,10 @@
         {
             switch (Filtro)
             {
-                case "0": //Id
-                    if (fechaDesde != null || fechaHasta != null)
+                case "0": // Id
 
-                        lista = ventaBLL.GetList(e => e.VentaId == int.Parse(Criterio) && (e.Fecha >= fechaDesde && e.Fecha <=
-                        fechaHasta));
-                    else
-                        lista = ventaBLL.GetList(e => e.VentaId == int.Parse(Criterio) || (e.Fecha >= fechaDesde && e.Fecha <=
-                        fechaHasta));
+                        lista = ventaBLL.GetList(e => e.VentaId == int.Parse(Criterio));
+                   
                     break;
                 
             }
