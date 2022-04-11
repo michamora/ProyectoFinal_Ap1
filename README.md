@@ -1,7 +1,7 @@
-# ProyectoFinal_Ap1
-Proyecto final - Programación Aplicada I para Enel Almonte by Michael Mora.
+# Proyecto Final - Aplicada 1
+# Sistema de Compra & Ventas
 
-Este proyecto se pueden registrar Clientes y articulos para posteriormente realizar ventas.
+Este es un sistema donde puedes registrar Clientes y articulos para posteriormente realizar ventas y poder consultar dichos registros.
 
 Usuario : michael
 
