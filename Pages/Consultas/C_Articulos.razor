@@ -123,7 +123,7 @@
     #nullable disable // Para quitar el aviso de nulls
     public string Filtro;
     public string Criterio;
-    private DateTime fechaDesde { get; set; } = new DateTime(2020, 4, 2);
+    private DateTime fechaDesde { get; set; } = new DateTime(2022, 4, 10);
     private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
 
     public DateOnly Fecha { get; set; } 
@@ -159,23 +159,19 @@
             switch (Filtro)
             {
                 case "0": //Id
-                    if (fechaDesde != null || fechaHasta != null)
+                   
 
-                        lista = articuloBLL.GetList(e => e.ArticuloId == int.Parse(Criterio) && (e.FechaCreacion >= fechaDesde && e.FechaCreacion <=
-                        fechaHasta));
-                    else
-                        lista = articuloBLL.GetList(e => e.ArticuloId == int.Parse(Criterio) || (e.FechaCreacion >= fechaDesde && e.FechaCreacion <=
-                        fechaHasta));
+                        lista = articuloBLL.GetList(e => e.ArticuloId == int.Parse(Criterio)) ;
+                    
+                        
                     break;
 
                 case "1":
-                    if (fechaDesde != null || fechaHasta != null)
+                    
 
-                        lista = articuloBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) && (p.FechaCreacion >= fechaDesde && p.FechaCreacion <=
-                        fechaHasta));
-                    else
-                        lista = articuloBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) || (p.FechaCreacion >= fechaDesde && p.FechaCreacion <=
-                        fechaHasta));
+                        lista = articuloBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower())) ;
+                    
+                      
                     break;
                 
             }
