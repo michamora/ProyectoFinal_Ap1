@@ -121,7 +121,7 @@
     public string Filtro;
     public string Criterio;
     private DateTime fechaDesde { get; set; } = new DateTime(1970, 12, 2);
-    private DateTime fechaHasta { get; set; } = new DateTime(2030, 4, 2);
+    private DateTime fechaHasta { get; set; } = new DateTime(2030, 12, 2);
     
     public DateOnly Fecha { get; set; } 
   
@@ -149,24 +149,18 @@
         {
             switch (Filtro)
             {
-                case "0": //Id
-                    if (fechaDesde != null || fechaHasta != null)
+                case "0": // Id
+                    
 
-                        lista = clienteBLL.GetList(e => e.ClienteId == int.Parse(Criterio) && (e.FechaNacimiento >= fechaDesde && e.FechaNacimiento <=
-                        fechaHasta));
-                    else
-                        lista = clienteBLL.GetList(e => e.ClienteId == int.Parse(Criterio) && (e.FechaNacimiento >= fechaDesde && e.FechaNacimiento <=
-                        fechaHasta));
+                        lista = clienteBLL.GetList(e => e.ClienteId == int.Parse(Criterio));
+                
                     break;
 
-                case "1":
-                    if (fechaDesde != null || fechaHasta != null)
+                case "1": // Nombre
+                   
                     
-                        lista = clienteBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= fechaDesde && p.FechaNacimiento <=
-                        fechaHasta));
-                    else
-                        lista = clienteBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= fechaDesde && p.FechaNacimiento <=
-                        fechaHasta));
+                        lista = clienteBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()));
+                  
                     break;
                 
             }
