@@ -139,7 +139,7 @@
                                         <td>@item.Descripcion</td>
                                         <td>@item.Cantidad</td>
                                         <td>RD$ @item.PrecioArticulo</td> 
-                                         <td>RD$ @importe</td>                                    
+                                         <td>RD$ @item.Importe</td>                                    
                                         
                                         <td><span class="oi oi-trash text-danger oi oi-x" href="#" title='Remover Detalle' @onclick=" (() => RemoverDetalle(item)) "> </span></td>
                                     </tr>
@@ -314,6 +314,7 @@
         ITBIS = 0;
         Total = 0;
         existenciaArticulo = 0;
+        importe = 0;
 
 
         venta = new Ventas();
@@ -445,6 +446,7 @@
 
         ObtenerDevuelta();
         ActualizandoUnidadesArticulo();
+        //MostrarImporte();
       
         guardado = ventaBLL.Guardar(venta);
 
@@ -523,11 +525,11 @@
                 Descripcion = descripcion,         // Agregando el detalle
                 Cantidad = Detalle.Cantidad,
                 PrecioArticulo = precioArticulo,
-                Importe = importe           
+                Importe = precioArticulo *  Convert.ToDecimal(Detalle.Cantidad)        
 
             });
         }          
-             MostrarImporte();      
+            // MostrarImporte();      
              ObtenerDatosArticulo();     
 
             venta.Total += (venta.SubTotal + ITBIS); // Mostrando el total que hace esa venta   
